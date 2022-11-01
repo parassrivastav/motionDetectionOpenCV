@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture("vtest.mp4")
+cap = cv2.VideoCapture(0)
 frame_width = int( cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 
 frame_height =int( cap.get( cv2.CAP_PROP_FRAME_HEIGHT))
@@ -19,7 +19,7 @@ while cap.isOpened():
     blur = cv2.GaussianBlur(gray, (5,5), 0)
     _, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
     dilated = cv2.dilate(thresh, None, iterations=3)
-    _,contours,_ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours,_ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     for contour in contours:
         (x, y, w, h) = cv2.boundingRect(contour)

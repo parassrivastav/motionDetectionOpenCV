@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture("qq4.webm")
+cap = cv2.VideoCapture(0)
 frame_width = int( cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 
 frame_height =int( cap.get( cv2.CAP_PROP_FRAME_HEIGHT))
@@ -21,14 +21,14 @@ while cap.isOpened():
     blur = cv2.GaussianBlur(gray, (5,5), 0)
     _, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
     dilated = cv2.dilate(thresh, None, iterations=3)
-    _,contours,_ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours,_ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     diff2 = cv2.absdiff(frame2, frame3)
     gray2 = cv2.cvtColor(diff2, cv2.COLOR_BGR2GRAY)
     blur2 = cv2.GaussianBlur(gray2, (5,5), 0)
     _, thresh2 = cv2.threshold(blur2, 20, 255, cv2.THRESH_BINARY)
     dilated2 = cv2.dilate(thresh2, None, iterations=3)
-    _,contours2,_ = cv2.findContours(dilated2, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours2,_ = cv2.findContours(dilated2, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     itCents = []
     for contour in contours:
